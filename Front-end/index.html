@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Meus Filmes</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+        <link rel="stylesheet" href="./style.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+        </style>
+    </head>
+    <body>
+
+        <header class="header">
+            <h1 class='app-title'>Adicione um Filme</h1>
+        </header>
+            <main class='main'>
+                <section class="container">
+                    
+                    <div class="form">
+                        <form onSubmit="submitForm(event)" class="js-form">
+
+                            <div >
+                                <label for="imagem" id="tituloForm">Imagem</label>
+                                <input class="input" required type="text" name="imagem" id="imagem" placeholder="Digite a url da imagem">
+                            </div>
+
+                            <div >
+                                <label for="titulo" id="tituloForm">Título</label>
+                                <input class="input" required type="text" name="titulo" id="titulo" placeholder="Digite o nome do filme">
+                            </div>
+
+                            <div >
+                                <label for="nota" id="tituloForm">Nota</label>
+                                <input class="input" required type="text" name="nota" id="nota" placeholder="Digite uma nota de 0 a 10">
+                            </div>
+                            
+                            <div >
+                                <label for="genero" id="tituloForm">Gênero</label>
+                                <input class="input"  required type="text" name="genero" id="genero" placeholder="Digite o gênero do filme">
+                            </div>
+
+                            <button type='submit' class="neon-button">Adicionar</button>
+                            <button type='submit' class="neon-button">Editar</button>
+                        </form>
+                    </div>
+                    <ul class="filme-list js-filme-list" id="teste"></ul>
+                    
+                </section>
+            </main>
+        <section>
+            <div class="main">
+                <ul class="cards" id="lista">
+                </ul>
+            </div>
+        </section> 
+
+        <script src="index.js"></script>
+
+    </body>
+</html>
