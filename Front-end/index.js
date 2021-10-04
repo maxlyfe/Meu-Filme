@@ -1,4 +1,4 @@
-const urlApi ='http://localhost:3000/filmes';
+const urlApi = 'http://localhost:3000/filmes';
 const lista = document.getElementById('lista');
 
 let edit = false;
@@ -70,7 +70,7 @@ const submitForm = async (evento) => {
         img: img.value,
         titulo: titulo.value,
         nota: nota.value,
-        genero = genero.value,
+        genero: genero.value,
     }
 
     if(!edit) {
