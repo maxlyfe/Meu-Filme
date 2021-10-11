@@ -1,23 +1,25 @@
-const urlApi = 'http://localhost:3000/filmes';
-const lista = document.getElementById('lista');
+const urlApi = "http://localhost:3000/filmes";
+const lista = document.getElementById("lista");
 
 let edit = false;
 let idEdit = 0;
 
 const getFilmes = async () => {
-    const response = await fetch(urlApi);
-    const data = await response.json();
+  const response = await fetch(urlApi);
+  const data = await response.json();
 
-    data.map((filme) =>{
-        lista.insertAdjacentHTML('beforeend',`
+  data.map((filme) => {
+    lista.insertAdjacentHTML(
+      "beforeend",
+      `
             <div class="main">
                 <ul class="cards">
                     <li class="cards_item">
                         <div class="card">
-                            <div class="card_imagem"><img class="imgCard" src="${filme.img}"></div>
+                            <div class="card_imagem"><img class="imgCard" src=${filme.capa}></div>
 
                             <div class="card_content">
-                                <h2 class="card_title">${filme.titulo}</h2>
+                                <h2 class="card_title">${filme.nome}</h2>
                                 <label class="checkbox">
                                     <input type="checkbox" />
                                     <svg viewBox="0 0 21 18">
@@ -40,7 +42,7 @@ const getFilmes = async () => {
                                 </label>
 
                                 <p class="card_text">Nota: ${filme.nota}</p>
-                                <p class="card_text">Gênero: ${filme.genero}</p>
+                                <p class="card_text">descricao: ${filme.descricao}</p>
                                 
                                 <button class="btn card_btn" onclick="putFilme(${filme.id})">Editar</button>
                                 <button class="btn card_btn" onclick="deleteFilme(${filme.id})">Excluir</button>
@@ -49,99 +51,97 @@ const getFilmes = async () => {
                     </li>
                 </ul>
             </div>
-        `)
-    })
-}
-
-
+        `
+    );
+  });
+};
 
 getFilmes();
 
 const submitForm = async (evento) => {
-    evento.preventDefault();
+  evento.preventDefault();
 
-    let img = document.getElementById('img');
-    let titulo = document.getElementById('titulo');
-    let nota = document.getElementById('nota');
-    let genero = document.getElementById('genero');
+  let capa = document.getElementById("capa");
+  let nome = document.getElementById("nome");
+  let nota = document.getElementById("nota");
+  let descricao = document.getElementById("descricao");
 
+  const filme = {
+    capa: capa.value,
+    nome: nome.value,
+    nota: nota.value,
+    descricao: descricao.value,
+  };
 
-    const filme = {
-        img: img.value,
-        titulo: titulo.value,
-        nota: nota.value,
-        genero: genero.value,
-    }
-
-    if(!edit) {
-        const request = new Request(`${urlApi}/add`, {
-            method:'POST',
-            body: JSON.stringify(filme),
-            headers: new Headers({
-                'Content-Type': 'application/json'})
-        })
-
-        const response = await fetch(request);
-        const result = await response.json();
-
-        if(result){
-            getFilmes();
-        }
-    } else {
-        const request = new Request(`${urlApi}/${idEdit}`, {
-            method: 'PUT',
-            body: JSON.stringify(filme),
-            headers: new Headers({
-                'Content-Type': 'application/json'})
-        })
-
-        const response = await fetch(request);
-        const result = await response.json();
-
-        if(result){
-            getFilmes();
-        }
-    }
-    img.value = '';
-    titulo.value = '';
-    nota.value = '';
-    genero.value = '';
-
-    lista.innerHTML = '';
-}
-
-getFilmesById = async (id) => {
-    const response = await fetch(`${urlApi}/${id}`);
-    return filme = response.json();
-}
-
-const putFilme = async (id) => {
-    edit = true;
-    idEdit = id;
-
-    const filme = await getFilmesById(id);
-
-    let imgEdit = document.getElementById('img');
-    let tituloEdit = document.getElementById('titulo');
-    let notaEdit = document.getElementById('nota');
-    let generoEdit = document.getElementById('geneto');
-
-    imgEdit.value = filme.img;
-    tituloEdit.value = filme.titulo;
-    notaEdit.value = filme.nota;
-    generoEdit.value = filme.genero;
-}
-
-
-const deleteFilme = async (id) => {
-    const request = new Request(`${urlApi}/${id}`, {
-        method: 'DELETE',
-    })
+  if (!edit) {
+    const request = new Request(`${urlApi}/add`, {
+      method: "POST",
+      body: JSON.stringify(filme),
+      headers: new Headers({
+        "Content-Type": "application/json",
+      }),
+    });
 
     const response = await fetch(request);
-    const data = await response.json();
-    
-    lista.innerHTML = '';
-    getFilmes();
-}
+    const result = await response.json();
 
+    if (result) {
+      getFilmes();
+    }
+  } else {
+    const request = new Request(`${urlApi}/${idEdit}`, {
+      method: "PUT",
+      body: JSON.stringify(filme),
+      headers: new Headers({
+        "Content-Type": "application/json",
+      }),
+    });
+
+    const response = await fetch(request);
+    const result = await response.json();
+
+    if (result) {
+      getFilmes();
+    }
+  }
+  capa.value = "";
+  nome.value = "";
+  nota.value = "";
+  descricao.value = "";
+
+  lista.innerHTML = "";
+};
+
+getFilmesById = async (id) => {
+  const response = await fetch(`${urlApi}/${id}`);
+  return (filme = response.json());
+};
+
+const putFilme = async (id) => {
+  edit = true;
+  idEdit = id;
+
+  const filme = await getFilmesById(id);
+
+  let capaEdit = document.getElementById("capa");
+  let nomeEdit = document.getElementById("nome");
+  let notaEdit = document.getElementById("nota");
+  let descricaoEdit = document.getElementById("descricao");
+
+  capaEdit.value = filme.img;
+  nomeEdit.value = filme.titulo;
+  notaEdit.value = filme.nota;
+  descricaoEdit.value = filme.descricao;
+};
+
+const deleteFilme = async (id) => {
+  const request = new Request(`${urlApi}/${id}`, {
+    method: "DELETE",
+  });
+
+  const response = await fetch(request);
+  const data = await response.json();
+
+  lista.innerHTML = "";
+  getFilmes();
+};
