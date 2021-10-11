@@ -1,23 +1,22 @@
-const express = require('express');
+const express = require("express");
+
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
 
-const cors = require('cors');
-
 app.use(cors());
 
-const routes = require('../Back-end/routes/routes');
+const FilmesRoutes = require("./routes/filmes.routes");
+const Conn = require("./conn/conn");
 
-app.use('/filmes', routes);
+Conn();
 
-app.get('/', (req, res) => {
-    res.send('Home');
-});
+app.use("/filmes", FilmesRoutes);
 
 const port = 3000;
 
 app.listen(port, () => {
-    console.log(`O servidor roda na porta ${port}`);
+  console.log(`Rodando na porta ${port}`);
 });
